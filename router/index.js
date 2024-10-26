@@ -1,8 +1,10 @@
 import express from 'express';
-import { RESPONSE } from '../constants/global.js';
+
+import { countries, index } from '../controllers/api.controller.js';
 
 const router = express.Router();
 
-router.get('/', async (req, res) => res.status(200).json({ status: RESPONSE.SUCCESS, message: 'Server UP!' }));
+router.get('/', index);
+router.get('/countries', countries);
 
 export default router;
