@@ -10,6 +10,7 @@ const app = express();
 const { init: dbInit } = useDBClient();
 dbInit();
 
+app.use(express.json());
 app.use(router);
 
 app.listen(PORT, () => {
