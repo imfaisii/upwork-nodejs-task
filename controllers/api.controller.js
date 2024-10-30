@@ -13,7 +13,7 @@ export const index = async (req, res) => {
     }
 };
 
-export const countries = async (req, res) => {
+export const countriesIndex = async (req, res) => {
     try {
         const { getCountries } = useApiService()
 
@@ -25,7 +25,7 @@ export const countries = async (req, res) => {
     }
 };
 
-export const salesReps = async (req, res) => {
+export const salesRepsIndex = async (req, res) => {
     try {
         const { getSalesRepresentatives } = useApiService()
 
@@ -33,6 +33,19 @@ export const salesReps = async (req, res) => {
 
         res.status(200).json({ status: RESPONSE.SUCCESS, code: 200, data: salesRepresentatives });
     } catch (error) {
-        res.status(500).json({ status: RESPONSE.ERROR, code: 500, message: 'Error getting countries.', error });
+        res.status(500).json({ status: RESPONSE.ERROR, code: 500, message: 'Error getting sales representatives.', error });
+    }
+};
+
+export const optimalIndex = async (req, res) => {
+    try {
+        const { getOptimalDistributions } = useApiService()
+
+        const optimalDistributions = await getOptimalDistributions();
+
+        res.status(200).json({ status: RESPONSE.SUCCESS, code: 200, data: optimalDistributions });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ status: RESPONSE.ERROR, code: 500, message: 'Error getting optimal distributions.', error });
     }
 };
