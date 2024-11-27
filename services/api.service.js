@@ -1,3 +1,4 @@
+import { useAxios } from "../composables/useAxios.js";
 import Country from "../models/country.model.js";
 
 export default function () {
@@ -11,6 +12,17 @@ export default function () {
             throw e;
         }
     };
+
+    const getCountriesFromCountriesEndPoint = async () => {
+        try {
+            const { axios: apiClient } = useAxios();
+            const response = await apiClient.get('/countries');
+            const countries = response.data.data;
+            return countries;
+        } catch (e) {
+            throw e;
+        }
+    }
 
     const getRegionsWithCountries = (countries) => {
         const regionsWithCountries = {};
@@ -26,9 +38,7 @@ export default function () {
     const getSalesRepresentatives = async () => {
         try {
             const salesReps = [];
-
-            // fetching all countries and group them by region
-            const countries = await Country.find({});
+            const countries = await getCountriesFromCountriesEndPoint();
             const regionsWithCountries = getRegionsWithCountries(countries);
 
             Object.entries(regionsWithCountries).forEach(([region, countries]) => {
@@ -58,7 +68,7 @@ export default function () {
         try {
             const salesRepsDistribution = [];
 
-            const countries = await Country.find({});
+            const countries = await getCountriesFromCountriesEndPoint();
             const regionsWithCountries = getRegionsWithCountries(countries);
 
             for (const region in regionsWithCountries) {
